@@ -2,39 +2,29 @@ defmodule RiseOfIndustry do
   @moduledoc """
 
   Given a list of products and their demand per 15 days,
-  returns the produder buildings you need, grouped by tier
+  returns the produder buildings you need
 
   iex> RiseOfIndustry.run([{"sugar", 6}])
-  %{
-    "farm produce" => [
-      %{
-        resource: "sugar",
-        building_type: "farm",
-        max_efficiency_needed: 1,
-        producer: "plantation",
-        tier: "farm produce",
-        additional_producer_needed_with_efficiency: 0
-      }
-    ],
-    "raw resources" => [
-      %{
-        resource: "water (siphon)",
-        building_type: "gatherer",
-        max_efficiency_needed: 0,
-        producer: "water siphon",
-        tier: "raw resources",
-        additional_producer_needed_with_efficiency: 67
-      }
-    ]
-  }
+  "farm produce,sugar,farm,plantation,1,0\nraw resources,water (siphon),gatherer,water siphon,0,67"
+
+  RiseOfIndustry.run([{"berry pie", 1}]) |> IO.puts()
   """
 
   def run(resources) do
-    resources |> buildings_needed() |> group()
+    resources |> buildings_needed() |> group() |> format_output()
   end
 
   def buildings_needed(resources) do
     buildings_needed([], resources)
+  end
+
+  defp format_output(buildings) do
+    buildings
+    |> Enum.flat_map(fn {_, x} -> x end)
+    |> Enum.map(fn x ->
+      "#{x.tier},#{x.resource},#{x.building_type},#{x.producer},#{x.max_efficiency_needed},#{x.additional_producer_needed_with_efficiency}"
+    end)
+    |> Enum.join("\n")
   end
 
   def group(buildings) do
