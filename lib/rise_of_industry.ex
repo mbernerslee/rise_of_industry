@@ -488,7 +488,7 @@ defmodule RiseOfIndustry do
         building_type: "factory",
         harvester_type: "land",
         tier: "tier 1",
-        recipe: "wheat,2"
+        recipe: "wheat,1"
       },
       "glass" => %{
         default_production_time_in_days: 15,
