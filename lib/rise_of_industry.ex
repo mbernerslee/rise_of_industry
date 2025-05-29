@@ -1,4 +1,34 @@
 defmodule RiseOfIndustry do
+  @moduledoc """
+
+  Given a list of products and their demand per 15 days,
+  returns the produder buildings you need, grouped by tier
+
+  iex> RiseOfIndustry.run([{"sugar", 6}])
+  %{
+    "farm produce" => [
+      %{
+        resource: "sugar",
+        building_type: "farm",
+        max_efficiency_needed: 1,
+        producer: "plantation",
+        tier: "farm produce",
+        additional_producer_needed_with_efficiency: 0
+      }
+    ],
+    "raw resources" => [
+      %{
+        resource: "water (siphon)",
+        building_type: "gatherer",
+        max_efficiency_needed: 0,
+        producer: "water siphon",
+        tier: "raw resources",
+        additional_producer_needed_with_efficiency: 67
+      }
+    ]
+  }
+  """
+
   def run(resources) do
     resources |> buildings_needed() |> group()
   end
